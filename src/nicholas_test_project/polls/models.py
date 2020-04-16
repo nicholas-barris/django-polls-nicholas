@@ -1,12 +1,11 @@
-import datetime
-
 from django.db import models
 from django.utils import timezone
 
 
+# Allows users to store and interact with questions
 class Question(models.Model):
     question_text = models.CharField(max_length=200)
-    pub_date = models.DateTimeField('date published')
+    pub_date = models.DateTimeField('date published', default=timezone.now())
 
     def __str__(self):
         return self.question_text
@@ -15,6 +14,7 @@ class Question(models.Model):
         return self.pub_date >= timezone.now()
 
 
+# Allows users to make a vote or votes on a specific question
 class Choice(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     choice_text = models.CharField(max_length=200)
